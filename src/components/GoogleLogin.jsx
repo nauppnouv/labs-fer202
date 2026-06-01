@@ -97,6 +97,7 @@ function GoogleLogin() {
           </Typography>
           <Typography
             variant="caption"
+            display="block"
             sx={{
               fontSize: "0.7rem",
               color: isDark ? "#999" : "#666",
