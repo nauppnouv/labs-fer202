@@ -1,0 +1,81 @@
+:root {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === Dark Theme (default) === */
+[data-theme="dark"] {
+  --bg-primary: #0f0f1a;
+  --bg-secondary: #1a1a2e;
+  --bg-card: rgba(255, 255, 255, 0.08);
+  --bg-card-hover: rgba(255, 255, 255, 0.12);
+  --bg-elevated: #1e1e2e;
+  --bg-header: rgba(15, 15, 26, 0.95);
+  --text-primary: rgba(255, 255, 255, 0.87);
+  --text-secondary: #aaa;
+  --text-muted: #666;
+  --text-heading: #fff;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.1);
+  --accent-gradient: linear-gradient(135deg, #667eea, #764ba2);
+  --title-gradient: linear-gradient(135deg, #f093fb, #f5576c, #4facfe);
+  --modal-overlay: rgba(0, 0, 0, 0.7);
+  --star-empty: #555;
+  --star-filled: #ffd700;
+  --like-color: #ff6b6b;
+}
+
+/* === Light Theme === */
+[data-theme="light"] {
+  --bg-primary: #f5f0ff;
+  --bg-secondary: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  --bg-elevated: #ffffff;
+  --bg-header: rgba(255, 255, 255, 0.95);
+  --text-primary: #2d2d44;
+  --text-secondary: #666;
+  --text-muted: #999;
+  --text-heading: #1a1a2e;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-light: rgba(0, 0, 0, 0.12);
+  --accent-gradient: linear-gradient(135deg, #667eea, #764ba2);
+  --title-gradient: linear-gradient(135deg, #e91e63, #9c27b0, #3f51b5);
+  --modal-overlay: rgba(0, 0, 0, 0.5);
+  --star-empty: #ddd;
+  --star-filled: #ffb300;
+  --like-color: #e53935;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+button:focus-visible {
+  outline: 2px solid #646cff;
+}
