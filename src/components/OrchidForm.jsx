@@ -11,7 +11,7 @@ const validationSchema = Yup.object({
   category: Yup.string().required("Category is required"),
   rating: Yup.number().min(1, "Min 1").max(5, "Max 5").required("Rating is required"),
   numberOfLike: Yup.number().min(0, "Can't be negative").required("Likes is required"),
-  image: Yup.string().url("Must be a valid URL").required("Image URL is required"),
+  image: Yup.string().required("Image URL is required"),
   isSpecial: Yup.boolean(),
   isNatural: Yup.boolean(),
   description: Yup.string(),
