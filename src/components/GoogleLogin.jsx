@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Box, Typography, Avatar, Chip } from "@mui/material";
+import { Button, Box, Typography, Avatar, Chip, useTheme } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useGoogleLogin } from "@react-oauth/google";
 import { loginSuccess, logout, selectAuth } from "../store/authSlice";
@@ -19,6 +19,8 @@ const GoogleIcon = () => (
 function GoogleLogin() {
   const dispatch = useDispatch();
   const { isLoggedIn, user } = useSelector(selectAuth);
+  const muiTheme = useTheme();
+  const isDark = muiTheme.palette.mode === "dark";
 
   // Real Google OAuth
   const googleLogin = useGoogleLogin({
@@ -79,10 +81,29 @@ function GoogleLogin() {
           {user?.name?.charAt(0) || "U"}
         </Avatar>
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
-          <Typography variant="caption" color="text.secondary" display="block" sx={{ lineHeight: 1.2 }}>
+          <Typography
+            variant="caption"
+            display="block"
+            noWrap
+            sx={{
+              lineHeight: 1.2,
+              color: isDark ? "#e0e0e0" : "#333",
+              fontWeight: 600,
+              maxWidth: 180,
+              fontFamily: '"Segoe UI", "Noto Sans", system-ui, sans-serif',
+            }}
+          >
             {user?.name || "User"}
           </Typography>
-          <Typography variant="caption" color="text.secondary" sx={{ fontSize: "0.7rem" }}>
+          <Typography
+            variant="caption"
+            display="block"
+            sx={{
+              fontSize: "0.7rem",
+              color: isDark ? "#999" : "#666",
+              fontFamily: '"Segoe UI", "Noto Sans", system-ui, sans-serif',
+            }}
+          >
             {user?.email || ""}
           </Typography>
         </Box>
