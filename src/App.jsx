@@ -1,6 +1,6 @@
 import { Routes, Route, NavLink, useNavigate } from "react-router-dom";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
-import { CssBaseline, AppBar, Toolbar, Typography, Button, IconButton, Box, Container } from "@mui/material";
+import { CssBaseline, AppBar, Toolbar, Typography, Button, IconButton, Box, Container, Tooltip } from "@mui/material";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
@@ -38,41 +38,76 @@ function AppContent() {
           backdropFilter: "blur(12px)",
           borderBottom: `1px solid ${theme === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`,
         }}>
-          <Toolbar sx={{ maxWidth: 1400, width: "100%", mx: "auto", px: { xs: 1, md: 2 } }}>
-            <LocalFloristIcon sx={{ mr: 1, color: "#f5576c" }} />
+          <Toolbar sx={{ maxWidth: 1400, width: "100%", mx: "auto", px: { xs: 1.5, md: 3 } }}>
+            {/* Logo */}
+            <LocalFloristIcon sx={{ mr: 0.5, color: "#f5576c", fontSize: 28 }} />
             <Typography
               variant="h6"
               component={NavLink}
               to="/"
-              sx={{ textDecoration: "none", fontWeight: 800, color: "inherit", mr: 4 }}
+              sx={{
+                textDecoration: "none",
+                fontWeight: 800,
+                color: "inherit",
+                mr: 4,
+                background: "linear-gradient(135deg, #f093fb, #f5576c)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
             >
               OrchidHub
             </Typography>
-            <Box sx={{ display: { xs: "none", sm: "flex" }, gap: 0.5, flex: 1 }}>
+
+            {/* Nav links */}
+            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 0.5, flex: 1 }}>
               {navItems.map((item) => (
                 <Button
                   key={item.path}
                   component={NavLink}
                   to={item.path}
                   end={item.path === "/"}
+                  size="small"
                   sx={{
-                    color: theme === "dark" ? "#aaa" : "#666",
+                    color: theme === "dark" ? "#999" : "#777",
+                    fontWeight: 500,
+                    px: 1.5,
+                    minWidth: 0,
                     "&.active": {
-                      color: "#fff",
-                      background: "rgba(102, 126, 234, 0.2)",
+                      color: theme === "dark" ? "#fff" : "#1a1a2e",
+                      background: theme === "dark" ? "rgba(102, 126, 234, 0.2)" : "rgba(102, 126, 234, 0.1)",
+                      fontWeight: 700,
                     },
-                    "&:hover": { color: theme === "dark" ? "#fff" : "#333", background: "rgba(255,255,255,0.08)" },
+                    "&:hover": {
+                      color: theme === "dark" ? "#fff" : "#333",
+                      background: "rgba(128, 128, 128, 0.1)",
+                    },
                   }}
                 >
                   {item.label}
                 </Button>
               ))}
             </Box>
-            <Box sx={{ flex: { xs: 1, sm: 0 }, display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
+
+            {/* Right side */}
+            <Box sx={{ flex: { xs: 1, md: 0 }, display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
               <GoogleLogin />
-              <IconButton onClick={toggleTheme} color="inherit">
-                {theme === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
-              </IconButton>
+              <Tooltip title={theme === "dark" ? "Light mode" : "Dark mode"}>
+                <IconButton
+                  onClick={toggleTheme}
+                  size="small"
+                  sx={{
+                    color: theme === "dark" ? "#ffb300" : "#555",
+                    background: theme === "dark" ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.05)",
+                    width: 34,
+                    height: 34,
+                    "&:hover": {
+                      background: theme === "dark" ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.1)",
+                    },
+                  }}
+                >
+                  {theme === "dark" ? <LightModeIcon fontSize="small" /> : <DarkModeIcon fontSize="small" />}
+                </IconButton>
+              </Tooltip>
             </Box>
           </Toolbar>
         </AppBar>
