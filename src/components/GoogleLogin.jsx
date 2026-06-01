@@ -113,13 +113,15 @@ function GoogleLogin() {
         px: 1.5,
         py: 0.5,
         fontSize: "0.8rem",
+        whiteSpace: "nowrap",
+        minWidth: "fit-content",
         "&:hover": {
           borderColor: "text.primary",
           background: "rgba(255,255,255,0.05)",
         },
       }}
     >
-      {GOOGLE_CLIENT_ID ? "Sign in with Google" : "Mock Login"}
+      {GOOGLE_CLIENT_ID ? "Google" : "Mock"}
     </Button>
   );
 }
