@@ -1,14 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import { Card, CardMedia, CardContent, Typography, Button, Chip, Stack, Box } from "@mui/material";
+import { Card, CardMedia, CardContent, Typography, Button, Chip, Stack, Box, useTheme } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 function OrchidCard({ orchid }) {
   const navigate = useNavigate();
+  const theme = useTheme();
   const { name, image, origin, color, rating, isSpecial, isNatural, category, numberOfLike } = orchid;
 
   const renderStars = (rate) => {
+    const emptyColor = theme.palette.mode === "dark" ? "#555" : "#ddd";
     return Array.from({ length: 5 }, (_, i) => (
-      <span key={i} style={{ color: i < rate ? "#ffd700" : "#555", fontSize: "1rem" }}>★</span>
+      <span key={i} style={{ color: i < rate ? "#ffb300" : emptyColor, fontSize: "1rem" }}>★</span>
     ));
   };
 
@@ -52,11 +54,7 @@ function OrchidCard({ orchid }) {
         </Stack>
       </Box>
       <CardContent sx={{ flex: 1, display: "flex", flexDirection: "column", gap: 1 }}>
-        <Typography variant="h6" fontWeight={700} sx={{
-          background: "linear-gradient(135deg, #fff, #e0e0e0)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-        }}>
+        <Typography variant="h6" fontWeight={700} color="text.primary">
           {name}
         </Typography>
         <Typography variant="caption" color="text.secondary" fontStyle="italic">
@@ -64,13 +62,13 @@ function OrchidCard({ orchid }) {
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Typography variant="body2" color="text.secondary">📍 {origin}</Typography>
-          <Box sx={{ width: 14, height: 14, borderRadius: "50%", bgcolor: color, border: "2px solid rgba(255,255,255,0.3)" }} />
+          <Box sx={{ width: 14, height: 14, borderRadius: "50%", bgcolor: color, border: "2px solid", borderColor: "divider" }} />
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", mt: "auto", pt: 1 }}>
           {renderStars(rating)}
           <Box sx={{ flex: 1 }} />
-          <FavoriteIcon sx={{ fontSize: 14, color: "#ff6b6b", mr: 0.5 }} />
-          <Typography variant="caption" color="#ff6b6b">{numberOfLike}</Typography>
+          <FavoriteIcon sx={{ fontSize: 14, color: "#e53935", mr: 0.5 }} />
+          <Typography variant="caption" color="#e53935">{numberOfLike}</Typography>
         </Box>
         <Button
           variant="contained"
