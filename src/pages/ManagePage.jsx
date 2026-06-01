@@ -13,22 +13,27 @@ import ListOfOrchids from "../data/ListOfOrchids";
 import OrchidForm from "../components/OrchidForm";
 import GoogleLogin from "../components/GoogleLogin";
 
+// Only these emails can access the Manage page
+const ALLOWED_EMAILS = ["trancuongquan2707@gmail.com", "tvq2707@gmail.com"];
+
 function ManagePage() {
   const dispatch = useDispatch();
   const orchids = useSelector(selectAllOrchids);
   const status = useSelector(selectOrchidStatus);
-  const { isLoggedIn } = useSelector(selectAuth);
+  const { isLoggedIn, user } = useSelector(selectAuth);
+  const userEmail = user?.email || "";
+  const isAuthorized = isLoggedIn && ALLOWED_EMAILS.includes(userEmail);
+
   const [showForm, setShowForm] = useState(false);
   const [editingOrchid, setEditingOrchid] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isAuthorized) {
       dispatch(fetchOrchids()).catch(() => {});
     }
-  }, [dispatch, isLoggedIn]);
+  }, [dispatch, isAuthorized]);
 
-  // Use local data as fallback when API has no data
   const displayOrchids = orchids.length > 0 ? orchids : ListOfOrchids;
 
   const handleAdd = async (values) => {
@@ -63,6 +68,7 @@ function ManagePage() {
     }
   };
 
+  // Not logged in → show login prompt
   if (!isLoggedIn) {
     return (
       <Box sx={{ textAlign: "center", py: 8 }}>
@@ -73,6 +79,23 @@ function ManagePage() {
           Please login with Google to manage orchids
         </Typography>
         <GoogleLogin />
+      </Box>
+    );
+  }
+
+  // Logged in but not authorized email → show restricted message
+  if (!isAuthorized) {
+    return (
+      <Box sx={{ textAlign: "center", py: 8 }}>
+        <Typography variant="h5" fontWeight={700} gutterBottom>
+          🚫 Access Restricted
+        </Typography>
+        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+          Your email <strong>{userEmail}</strong> is not authorized to access this page.
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Only specific accounts can manage orchids.
+        </Typography>
       </Box>
     );
   }
@@ -106,7 +129,6 @@ function ManagePage() {
         <Alert severity="info" sx={{ mb: 2 }}>Loading orchids from API...</Alert>
       )}
 
-      {/* Form section */}
       {(showForm || editingOrchid) && (
         <Paper elevation={0} sx={{ p: 3, mb: 3, border: "1px solid", borderColor: "divider", borderRadius: 3 }}>
           <OrchidForm
@@ -121,7 +143,6 @@ function ManagePage() {
         </Paper>
       )}
 
-      {/* Table */}
       <TableContainer component={Paper} elevation={0} sx={{ border: "1px solid", borderColor: "divider", borderRadius: 3 }}>
         <Table>
           <TableHead>
