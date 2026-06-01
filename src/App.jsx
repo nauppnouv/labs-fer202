@@ -7,6 +7,7 @@ import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import { ThemeProvider, useTheme } from "./hooks/useTheme";
 import { darkTheme, lightTheme } from "./styles/theme";
 import GoogleLogin from "./components/GoogleLogin";
+import ErrorBoundary from "./components/ErrorBoundary";
 import HomePage from "./pages/HomePage";
 import DetailPage from "./pages/DetailPage";
 import ContactPage from "./pages/ContactPage";
@@ -113,7 +114,8 @@ function AppContent() {
         </AppBar>
 
         <Container maxWidth="xl" sx={{ px: { xs: 1, sm: 2, md: 3 } }}>
-          <Routes>
+          <ErrorBoundary>
+            <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/detail/:id" element={<DetailPage />} />
             <Route path="/contact" element={<ContactPage />} />
@@ -122,6 +124,7 @@ function AppContent() {
             <Route path="/natural" element={<NaturalPage />} />
             <Route path="/manage" element={<ManagePage />} />
           </Routes>
+          </ErrorBoundary>
         </Container>
 
         <Box component="footer" className="app-footer">

@@ -9,6 +9,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import { fetchOrchids, addOrchid, editOrchid, removeOrchid, selectAllOrchids, selectOrchidStatus } from "../store/orchidSlice";
 import { selectAuth } from "../store/authSlice";
+import ListOfOrchids from "../data/ListOfOrchids";
 import OrchidForm from "../components/OrchidForm";
 import GoogleLogin from "../components/GoogleLogin";
 
@@ -22,11 +23,13 @@ function ManagePage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchOrchids());
-  }, [dispatch]);
+    if (isLoggedIn) {
+      dispatch(fetchOrchids()).catch(() => {});
+    }
+  }, [dispatch, isLoggedIn]);
 
-  // Fallback: if API fails, use the local data
-  const displayOrchids = orchids.length > 0 ? orchids : [];
+  // Use local data as fallback when API has no data
+  const displayOrchids = orchids.length > 0 ? orchids : ListOfOrchids;
 
   const handleAdd = async (values) => {
     setLoading(true);
@@ -79,7 +82,6 @@ function ManagePage() {
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3, flexWrap: "wrap", gap: 2 }}>
         <Typography variant="h4" fontWeight={800}>📋 Manage Orchids</Typography>
         <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-          <GoogleLogin />
           <Button
             variant="contained"
             startIcon={<AddIcon />}
@@ -96,8 +98,12 @@ function ManagePage() {
 
       {status === "failed" && (
         <Alert severity="info" sx={{ mb: 2 }}>
-          ⚡ Running in demo mode. Please configure your mockapi.io URL in .env to enable real API calls.
+          ⚡ API not available — showing local data. CRUD changes won't be saved to the server.
         </Alert>
+      )}
+
+      {status === "loading" && (
+        <Alert severity="info" sx={{ mb: 2 }}>Loading orchids from API...</Alert>
       )}
 
       {/* Form section */}
@@ -120,7 +126,6 @@ function ManagePage() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontWeight: 700 }}>ID</TableCell>
               <TableCell sx={{ fontWeight: 700 }}>Image</TableCell>
               <TableCell sx={{ fontWeight: 700 }}>Name</TableCell>
               <TableCell sx={{ fontWeight: 700 }}>Origin</TableCell>
@@ -133,23 +138,23 @@ function ManagePage() {
           <TableBody>
             {displayOrchids.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} align="center" sx={{ py: 4, color: "text.secondary" }}>
+                <TableCell colSpan={7} align="center" sx={{ py: 4, color: "text.secondary" }}>
                   No orchids found. Add one to get started!
                 </TableCell>
               </TableRow>
             ) : (
               displayOrchids.map((o) => (
                 <TableRow key={o.id} hover>
-                  <TableCell>#{o.id}</TableCell>
                   <TableCell>
                     <Box component="img" src={o.image} alt={o.name}
                       sx={{ width: 50, height: 50, borderRadius: 1, objectFit: "cover" }}
+                      onError={(e) => { e.target.style.display = "none"; }}
                     />
                   </TableCell>
                   <TableCell sx={{ fontWeight: 600 }}>{o.name}</TableCell>
                   <TableCell>{o.origin}</TableCell>
                   <TableCell>{o.category}</TableCell>
-                  <TableCell>{"★".repeat(o.rating) + "☆".repeat(5 - o.rating)}</TableCell>
+                  <TableCell>{"★".repeat(Math.min(o.rating, 5)) + "☆".repeat(Math.max(5 - o.rating, 0))}</TableCell>
                   <TableCell>
                     <Box sx={{ display: "flex", gap: 0.5 }}>
                       {o.isSpecial && <Chip label="✦" size="small" color="warning" sx={{ minWidth: 28 }} />}
