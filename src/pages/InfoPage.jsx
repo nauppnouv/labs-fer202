@@ -30,16 +30,6 @@ function InfoPage() {
         <p>Software Engineering Student · FPT University HCMC</p>
       </div>
 
-      <div className="info-card">
-        <h2>📖 About This Project</h2>
-        <p>
-          This is my FER202 React lab project — a comprehensive orchid showcase built
-          iteratively through 6 labs. Each lab added new capabilities to the same codebase:
-          starting from basic components, through hooks and routing, to UI libraries,
-          CSS preprocessing, and finally API integration with full CRUD.
-        </p>
-      </div>
-
       <div className="profile-section">
         <div className="profile-left">
           <div className="profile-avatar">🐾</div>
@@ -58,23 +48,39 @@ function InfoPage() {
         </div>
       </div>
 
-      <div className="info-card">
-        <h2>⚡ Key Features</h2>
-        <ul className="feature-list">
-          {features.map((f, i) => (
-            <li key={i}>{f}</li>
-          ))}
-        </ul>
-      </div>
+      <div className="info-grid">
+        <div className="info-column">
+          <div className="info-card">
+            <h2>📖 About This Project</h2>
+            <p>
+              This is my FER202 React lab project — a comprehensive orchid showcase built
+              iteratively through 6 labs. Each lab added new capabilities to the same codebase:
+              starting from basic components, through hooks and routing, to UI libraries,
+              CSS preprocessing, and finally API integration with full CRUD.
+            </p>
+          </div>
 
-      <div className="info-card">
-        <h2>🛠️ Technologies</h2>
-        <div className="tech-grid">
-          {["React 19", "Vite", "React Router", "MUI", "SCSS", "Redux Toolkit"].map((tech) => (
-            <span key={tech} className="tech-badge">{tech}</span>
-          ))}
-          <span className="tech-badge special">Formik + Yup</span>
-          <span className="tech-badge special">Axios</span>
+          <div className="info-card">
+            <h2>🛠️ Technologies</h2>
+            <div className="tech-grid">
+              {["React 19", "Vite", "React Router", "MUI", "SCSS", "Redux Toolkit"].map((tech) => (
+                <span key={tech} className="tech-badge">{tech}</span>
+              ))}
+              <span className="tech-badge special">Formik + Yup</span>
+              <span className="tech-badge special">Axios</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="info-column">
+          <div className="info-card">
+            <h2>⚡ Key Features</h2>
+            <ul className="feature-list">
+              {features.map((f, i) => (
+                <li key={i}>{f}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

@@ -1,16 +1,23 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Box, Typography, Tabs, Tab } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import ListOfOrchids from "../data/ListOfOrchids";
+import { selectAllOrchids } from "../store/orchidSlice";
 import OrchidCard from "../components/OrchidCard";
 
 function HomePage() {
   const [categoryTab, setCategoryTab] = useState(0);
-  const categories = ["All", ...new Set(ListOfOrchids.map((o) => o.category))];
+  const orchids = useSelector(selectAllOrchids);
+  const baseCategories = [...new Set(orchids.map((o) => o.category))];
+  const categories = ["All", ...baseCategories, "Special ✦", "Natural 🌿"];
 
-  const filtered = categoryTab === 0
-    ? ListOfOrchids
-    : ListOfOrchids.filter((o) => o.category === categories[categoryTab]);
+  const filtered = (() => {
+    const selected = categories[categoryTab];
+    if (selected === "All") return orchids;
+    if (selected === "Special ✦") return orchids.filter((o) => o.isSpecial);
+    if (selected === "Natural 🌿") return orchids.filter((o) => o.isNatural);
+    return orchids.filter((o) => o.category === selected);
+  })();
 
   return (
     <Box sx={{ py: { xs: 3, md: 4 } }}>
@@ -24,7 +31,7 @@ function HomePage() {
           🌸 Our Orchid Collection
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
-          Discover {ListOfOrchids.length} exquisite orchid varieties from around the world
+          Discover {orchids.length} exquisite orchid varieties from around the world
         </Typography>
       </Box>
 
