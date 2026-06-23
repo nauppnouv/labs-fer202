@@ -80,13 +80,12 @@ function GoogleLogin() {
         >
           {user?.name?.charAt(0) || "U"}
         </Avatar>
-        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+        <Box sx={{ display: { xs: "none", sm: "flex" }, flexDirection: "column", justifyContent: "center", minWidth: 0 }}>
           <Typography
             variant="caption"
-            display="block"
             noWrap
             sx={{
-              lineHeight: 1.2,
+              lineHeight: 1.3,
               color: isDark ? "#e0e0e0" : "#333",
               fontWeight: 600,
               maxWidth: 180,
@@ -97,9 +96,10 @@ function GoogleLogin() {
           </Typography>
           <Typography
             variant="caption"
-            display="block"
+            noWrap
             sx={{
               fontSize: "0.7rem",
+              lineHeight: 1.3,
               color: isDark ? "#999" : "#666",
               fontFamily: '"Segoe UI", "Noto Sans", system-ui, sans-serif',
             }}

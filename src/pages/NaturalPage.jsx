@@ -1,10 +1,12 @@
+import { useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import ListOfOrchids from "../data/ListOfOrchids";
+import { selectAllOrchids } from "../store/orchidSlice";
 import OrchidCard from "../components/OrchidCard";
 
 function NaturalPage() {
-  const naturalOrchids = ListOfOrchids.filter((o) => o.isNatural);
+  const orchids = useSelector(selectAllOrchids);
+  const naturalOrchids = orchids.filter((o) => o.isNatural);
 
   return (
     <Box sx={{ py: { xs: 3, md: 4 } }}>

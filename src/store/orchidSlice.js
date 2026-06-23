@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "./orchidApi";
+import ListOfOrchids from "../data/ListOfOrchids";
 
 // Async Thunks
 export const fetchOrchids = createAsyncThunk(
@@ -51,7 +52,7 @@ export const removeOrchid = createAsyncThunk(
 );
 
 const initialState = {
-  items: [],
+  items: ListOfOrchids,
   status: "idle", // idle | loading | succeeded | failed
   error: null,
   currentOrchid: null,

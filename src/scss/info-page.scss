@@ -27,7 +27,7 @@
 
     p {
       font-size: 1.1rem;
-      color: $text-muted;
+      color: var(--text-secondary);
       margin: 0;
     }
 
@@ -54,15 +54,15 @@
     h2 {
       font-size: 1.4rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--text-heading);
       margin: 0 0 $spacing-md;
       padding-bottom: $spacing-sm;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 2px solid var(--border-color);
     }
 
     p {
       font-size: 0.95rem;
-      color: $text-muted;
+      color: var(--text-secondary);
       line-height: 1.7;
       margin: 0;
     }
@@ -95,8 +95,30 @@
     }
   }
 
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-lg;
+    margin-top: $spacing-lg;
+
+    .info-column {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-lg;
+
+      .info-card {
+        margin-bottom: 0;
+      }
+    }
+
+    @include respond-to(md) {
+      grid-template-columns: 1fr;
+    }
+  }
+
   // Profile section with nested media query
   .profile-section {
+    margin-bottom: $spacing-lg;
     @include card-base;
     padding: $spacing-lg;
     @include flex-between;
@@ -117,13 +139,13 @@
 
       .profile-info {
         h3 {
-          color: #fff;
+          color: var(--text-heading);
           margin: 0 0 4px;
           font-size: 1.1rem;
         }
 
         p {
-          color: $text-muted;
+          color: var(--text-secondary);
           margin: 0;
           font-size: 0.9rem;
         }
@@ -145,7 +167,7 @@
 
         .stat-label {
           font-size: 0.75rem;
-          color: $text-dim;
+          color: var(--text-muted);
           text-transform: uppercase;
         }
       }
@@ -175,7 +197,7 @@
 
     li {
       padding: $spacing-sm 0;
-      color: $text-muted;
+      color: var(--text-secondary);
       font-size: 0.9rem;
       display: flex;
       align-items: center;

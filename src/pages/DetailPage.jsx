@@ -1,14 +1,16 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Box, Typography, Button, Chip, Stack, Paper } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ListOfOrchids from "../data/ListOfOrchids";
+import { selectAllOrchids } from "../store/orchidSlice";
 
 function DetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const orchid = ListOfOrchids.find((o) => o.id === Number(id));
+  const orchids = useSelector(selectAllOrchids);
+  const orchid = orchids.find((o) => String(o.id) === String(id));
 
   if (!orchid) {
     return (

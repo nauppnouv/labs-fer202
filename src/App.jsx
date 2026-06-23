@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Routes, Route, NavLink, useNavigate } from "react-router-dom";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import { CssBaseline, AppBar, Toolbar, Typography, Button, IconButton, Box, Container, Tooltip } from "@mui/material";
@@ -13,13 +15,12 @@ import DetailPage from "./pages/DetailPage";
 import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
 import InfoPage from "./pages/InfoPage";
-import NaturalPage from "./pages/NaturalPage";
 import ManagePage from "./pages/ManagePage";
+import { fetchOrchids } from "./store/orchidSlice";
 import "./App.css";
 
 const navItems = [
   { label: "Home", path: "/" },
-  { label: "Natural", path: "/natural" },
   { label: "About", path: "/about" },
   { label: "Info", path: "/info" },
   { label: "Contact", path: "/contact" },
@@ -27,7 +28,13 @@ const navItems = [
 ];
 
 function AppContent() {
+  const dispatch = useDispatch();
   const { theme, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    dispatch(fetchOrchids()).catch(() => {});
+  }, [dispatch]);
+
   const muiTheme = theme === "dark" ? darkTheme : lightTheme;
 
   return (
@@ -121,7 +128,6 @@ function AppContent() {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/info" element={<InfoPage />} />
-            <Route path="/natural" element={<NaturalPage />} />
             <Route path="/manage" element={<ManagePage />} />
           </Routes>
           </ErrorBoundary>
